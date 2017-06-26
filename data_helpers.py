@@ -38,17 +38,26 @@ def load_data_and_labels(data_file):
     # Load data from files
 
     # {"Very Negative", "Negative", "Neutral", "Positive", "Very Positive"}
+    #label_mappings = {
+    #    '0': [1,0,0,0,0],
+    #    '1': [0,1,0,0,0],
+    #    '2': [0,0,1,0,0],
+    #    '3': [0,0,0,1,0],
+    #    '4': [0,0,0,0,1]
+    #}
+	
     label_mappings = {
-        '0': [1,0,0,0,0],
-        '1': [0,1,0,0,0],
-        '2': [0,0,1,0,0],
-        '3': [0,0,0,1,0],
-        '4': [0,0,0,0,1]
+        '0': [1,0],
+        '1': [1,0],
+        '2': [0,1],
+        '3': [0,1],
+        '4': [0,1]
     }
 
 
     # Default label for unkonw label
-    default_label = [0,0,1,0,0]
+    #default_label = [0,0,1,0,0]
+    default_label = [0,1]
 
     x_text = []
     labels = []
