@@ -85,8 +85,6 @@ print("Train/Dev split: {:d}/{:d}".format(len(y_train), len(y_dev)))
 # ==================================================
 tf.MaxAcc = 0.1
 
-def copymax(path):
-    shutil.copy(path, "{}.backup".format(path))
 
 with tf.Graph().as_default():
     session_conf = tf.ConfigProto(
@@ -214,6 +212,3 @@ with tf.Graph().as_default():
                 print("Saved model checkpoint to {}\n".format(path))
                 if ifsave:  # 存个备份免得被删了
                     path = saver.save(sess, MaxAcc_prefi, None)
-                    copymax("{}.data-00000-of-00001".format(path))
-                    copymax("{}.index".format(path))
-                    copymax("{}.meta".format(path))
