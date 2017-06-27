@@ -59,7 +59,7 @@ def load_data_and_labels(data_file, have_label=1):
                 x_text.append(clean_str(sample[2:]))
                 labels.append(label_mappings.get(sample[0], default_label))
             else:
-                x_text.append(clean_str(sample))
+                x_text.append(sample)
                 labels.append(default_label)
 
     y_label = np.concatenate([labels], 0)

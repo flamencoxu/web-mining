@@ -36,20 +36,14 @@ for attr, value in sorted(FLAGS.__flags.items()):
     print("{}={}".format(attr.upper(), value))
 print("")
 
-# CHANGE THIS: Load data. Load your own data here
-if FLAGS.eval_train:
+x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.data_file, 0)
+x_data = [data_helpers.clean_str(x) for x in x_raw]
 
-    x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.data_file, 0)
-
-    y_test = np.argmax(y_test, axis=1)
-else:
-    x_raw = ["a masterpiece four years in the making", "everything is off."]
-    y_test = [1, 0]
 
 # Map data into vocabulary
 vocab_path = os.path.join(FLAGS.checkpoint_dir, "..", "vocab")
 vocab_processor = learn.preprocessing.VocabularyProcessor.restore(vocab_path)
-x_test = np.array(list(vocab_processor.transform(x_raw)))
+x_test = np.array(list(vocab_processor.transform(x_data)))
 
 print("\nEvaluating...\n")
 
