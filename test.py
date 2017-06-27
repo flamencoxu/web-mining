@@ -86,7 +86,7 @@ with graph.as_default():
             all_predictions = np.concatenate([all_predictions, batch_predictions])
 # Save the result
 with open("./data/test_release.txt", 'w') as f:
-    for(i=0;i < all_predictions.length; i++)
+    for i in all_predictions
         f.write(all_predictions[i], ",", x_raw[i])
 
 #predictions_human_readable = np.column_stack((all_predictions, np.array(x_raw)))
