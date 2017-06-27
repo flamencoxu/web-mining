@@ -87,7 +87,7 @@ with graph.as_default():
 
 # Save the result
 predictions_human_readable = np.column_stack((all_predictions, np.array(x_raw)))
-out_path = os.path.join(FLAGS.checkpoint_dir, "..", "test-result.txt")
+out_path = os.path.join(FLAGS.checkpoint_dir, "..", "test-release.txt")
 print("Saving evaluation to {0}".format(out_path))
 with open(out_path, 'w') as f:
     csv.writer(f, delimiter= ' ').writerows(predictions_human_readable)
