@@ -30,7 +30,7 @@ def clean_str(string):
 
 
 
-def load_data_and_labels(data_file):
+def load_data_and_labels(data_file, have_label=1):
     """
     Loads MR polarity data from files, splits the data into words and generates labels.
     Returns split sentences and labels.
@@ -55,8 +55,12 @@ def load_data_and_labels(data_file):
     with open(data_file, 'r') as f:
         samples = [s.strip() for s in list(f.readlines())]
         for sample in samples:
-            x_text.append(clean_str(sample[2:]))
-            labels.append(label_mappings.get(sample[0], default_label))
+            if have_label:
+                x_text.append(clean_str(sample[2:]))
+                labels.append(label_mappings.get(sample[0], default_label))
+            else:
+                x_text.append(clean_str(sample))
+                labels.append(default_label)
 
     y_label = np.concatenate([labels], 0)
     return [x_text, y_label]

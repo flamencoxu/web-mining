@@ -39,7 +39,7 @@ print("")
 # CHANGE THIS: Load data. Load your own data here
 if FLAGS.eval_train:
 
-    x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.data_file)
+    x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.data_file, 0)
 
     y_test = np.argmax(y_test, axis=1)
 else:
@@ -84,12 +84,9 @@ with graph.as_default():
         for x_test_batch in batches:
             batch_predictions = sess.run(predictions, {input_x: x_test_batch, dropout_keep_prob: 1.0})
             all_predictions = np.concatenate([all_predictions, batch_predictions])
+
+
 # Save the result
 with open("./data/test_release.txt", 'w') as f:
-    for i in all_predictions:
-        f.write(all_predictions[i], ",", x_raw[i])
-
-#predictions_human_readable = np.column_stack((all_predictions, np.array(x_raw)))
-#out_path = os.path.join(FLAGS.checkpoint_dir, "..", "test-release.txt")
-#with open(out_path, 'w') as f:
-#    csv.writer(f, delimiter= ' ').writerows(predictions_human_readable)
+    for i,v in enumerate(all_predictions):
+        f.write("%s %s\n"% (int(v), x_raw[i]))
