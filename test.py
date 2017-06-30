@@ -20,9 +20,8 @@ tf.flags.DEFINE_string("data_file", "./data/test.txt", "Data source for the eval
 
 # Eval Parameters
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
-tf.flags.DEFINE_string("checkpoint_dir", "", "Checkpoint directory from training run")
-
-tf.flags.DEFINE_boolean("eval_train", True, "Evaluate on all training data")
+tf.flags.DEFINE_string("model_dir", "", "Checkpoint directory from training run")
+tf.flags.DEFINE_string("checkpoint", "", "Checkpoint directory from training run")
 
 # Misc Parameters
 tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
@@ -41,7 +40,7 @@ x_data = [data_helpers.clean_str(x) for x in x_raw]
 
 
 # Map data into vocabulary
-vocab_path = os.path.join(FLAGS.checkpoint_dir, "..", "vocab")
+vocab_path = "./runs/%s/vocab"%(FLAGS.model_dir)
 vocab_processor = learn.preprocessing.VocabularyProcessor.restore(vocab_path)
 x_test = np.array(list(vocab_processor.transform(x_data)))
 
@@ -49,7 +48,11 @@ print("\nEvaluating...\n")
 
 # Evaluation
 # ==================================================
-checkpoint_file = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)
+checkpoint_dir = "./runs/%s/checkpoints"%(FLAGS.model_dir)
+if(FLAGS.checkpoint):
+    checkpoint_file = os.path.join(checkpoint_dir, FLAGS.checkpoint)
+else:
+    checkpoint_file = tf.train.latest_checkpoint(checkpoint_dir)
 graph = tf.Graph()
 with graph.as_default():
     session_conf = tf.ConfigProto(
